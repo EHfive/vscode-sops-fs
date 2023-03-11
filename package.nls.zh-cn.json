@@ -1,0 +1,7 @@
+{
+  "sopsfs.mountSopsFile.title": "挂载 SOPS 虚拟文件系统",
+  "sopsfs.unmountSopsFile.title": "卸载 SOPS 虚拟文件系统",
+  "sopsfs.mountSopsEditor.title": "挂载当前文件为 SOPS 虚拟文件系统",
+  "sopsfs.configuration.title": "SOPS 虚拟文件系统",
+  "sopsfs.sopsCommand.description": "sops 命令路径"
+}

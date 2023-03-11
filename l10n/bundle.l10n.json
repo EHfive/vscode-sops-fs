@@ -1,0 +1,11 @@
+{
+  "Mounting failed, {0} might not be a valid SOPS file": "Mounting failed, {0} might not be a valid SOPS file",
+  "Already mounted SOPS file {0}": "Already mounted SOPS file {0}",
+  "SOPS file {0} not mounted": "SOPS file {0} not mounted",
+  "Failed to decrypt SOPS file to JSON": "Failed to decrypt SOPS file to JSON",
+  "Set value on binary file is invalid": "Set value on binary file is invalid",
+  "Failed to set {path} on SOPS file": "Failed to set {path} on SOPS file",
+  "Failed to decrypt SOPS file": "Failed to decrypt SOPS file",
+  "Deletion of data file is forbidden": "Deletion of data file is forbidden",
+  "Renaming of data file is forbidden": "Renaming of data file is forbidden"
+}

@@ -1,0 +1,146 @@
+{
+  "name": "vscode-sops-fs",
+  "displayName": "SOPS Virtual Filesystem",
+  "version": "0.0.1",
+  "description": "VS Code SOPS virtual filesystem extension",
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "sops"
+  ],
+  "homepage": "https://github.com/EHfive/vscode-sops-fs/blob/main/README.md",
+  "bugs": {
+    "url": "https://github.com/EHfive/vscode-sops-fs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EHfive/vscode-sops-fs.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Huang-Huang Bao",
+    "email": "i@eh5.me"
+  },
+  "publisher": "eh5",
+  "main": "./out/extension.js",
+  "scripts": {
+    "compile": "pnpm run esbuild-base --sourcemap",
+    "compile-tests": "tsc -p tsconfig.test.json",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "l10n-export": "vscode-l10n-dev export -o ./l10n ./src",
+    "lint": "eslint src --ext ts",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "test": "node ./out/test/runTest.js",
+    "vscode:prepublish": "pnpm run esbuild-base --minify",
+    "watch": "pnpm run esbuild-base --sourcemap --watch",
+    "watch-tests": "pnpm run compile-tests -w"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "sopsfs.mountSopsFile",
+        "title": "%sopsfs.mountSopsFile.title%",
+        "category": "SOPS"
+      },
+      {
+        "command": "sopsfs.unmountSopsFile",
+        "title": "%sopsfs.unmountSopsFile.title%",
+        "category": "SOPS"
+      },
+      {
+        "command": "sopsfs.mountSopsEditor",
+        "title": "%sopsfs.mountSopsEditor.title%",
+        "category": "SOPS"
+      }
+    ],
+    "configuration": {
+      "title": "%sopsfs.configuration.title%",
+      "properties": {
+        "sopsfs.sopsCommand": {
+          "type": "string",
+          "default": "sops",
+          "description": "%sopsfs.sopsCommand.description%"
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "sops",
+        "aliases": [
+          "SOPS"
+        ],
+        "filenamePatterns": [
+          "?*.sops{,.json,.yaml,.yml,.ini,.env}"
+        ]
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceLangId == sops && !explorerResourceIsRoot",
+          "command": "sopsfs.mountSopsFile",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == sops && !explorerResourceIsRoot",
+          "command": "sopsfs.unmountSopsFile",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "isFileSystemResource",
+          "command": "sopsfs.mountSopsEditor"
+        }
+      ],
+      "commandPalette": [
+        {
+          "when": "false",
+          "command": "sopsfs.mountSopsFile"
+        },
+        {
+          "when": "false",
+          "command": "sopsfs.unmountSopsFile"
+        },
+        {
+          "when": "isFileSystemResource",
+          "command": "sopsfs.mountSopsEditor"
+        }
+      ]
+    }
+  },
+  "activationEvents": [
+    "onLanguage:sops",
+    "onFileSystem:sops"
+  ],
+  "dependencies": {
+    "execa": "^7.0.0",
+    "lodash.throttle": "^4.1.1",
+    "lru-cache": "^7.18.3",
+    "object-path": "^0.11.8",
+    "tempy": "^3.0.0",
+    "type-fest": "^3.6.1"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/lodash.throttle": "^4.1.7",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/object-path": "^0.11.1",
+    "@types/vscode": "^1.76.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "@vscode/l10n-dev": "^0.0.23",
+    "@vscode/test-electron": "^2.2.3",
+    "esbuild": "^0.17.11",
+    "eslint": "^8.34.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.0.0-beta"
+  },
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "l10n": "./l10n"
+}

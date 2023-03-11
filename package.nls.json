@@ -1,0 +1,7 @@
+{
+  "sopsfs.mountSopsFile.title": "Mount SOPS file as virtual filesystem",
+  "sopsfs.unmountSopsFile.title": "Unmount SOPS virtual filesystem",
+  "sopsfs.mountSopsEditor.title": "Mount the current file as SOPS virtual filesystem",
+  "sopsfs.configuration.title": "SOPS Virtual Filesystem",
+  "sopsfs.sopsCommand.description": "Path to sops command"
+}
