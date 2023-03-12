@@ -1,6 +1,7 @@
 import vscode from "vscode";
 import { l10n } from "vscode";
 import { SopsFsProvider } from "./sopsfs-provider";
+import which from "which";
 import path from "path";
 
 async function mount(uri: vscode.Uri) {
@@ -45,13 +46,31 @@ async function unmount(uri: vscode.Uri) {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  const sopsCmd = vscode.workspace
-    .getConfiguration()
-    .get("sopsfs.sopsCommand") as string | undefined;
+  const config = vscode.workspace.getConfiguration();
+  const sopsCmd =
+    (config.get("sopsfs.sopsCommand") as string | undefined) || "sops";
+  const env = config.get("sopsfs.env") as object | undefined;
+
+  try {
+    which.sync(sopsCmd);
+  } catch (e) {
+    vscode.window.showErrorMessage(
+      l10n.t(
+        "Can't not found sops command(\"{0}\"), make sure it's installed.",
+        sopsCmd
+      )
+    );
+  }
+
   context.subscriptions.push(
     vscode.workspace.registerFileSystemProvider(
       "sops",
-      new SopsFsProvider(sopsCmd),
+      new SopsFsProvider({
+        sopsCmd,
+        env: {
+          ...env,
+        },
+      }),
       {
         isCaseSensitive: true,
         isReadonly: false,

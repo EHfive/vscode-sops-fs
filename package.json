@@ -1,7 +1,7 @@
 {
   "name": "vscode-sops-fs",
   "displayName": "SOPS Virtual Filesystem",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "VS Code SOPS virtual filesystem extension",
   "categories": [
     "Other"
@@ -30,6 +30,10 @@
     "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
     "l10n-export": "vscode-l10n-dev export -o ./l10n ./src",
     "lint": "eslint src --ext ts",
+    "package": "vsce package --no-dependencies",
+    "publish-ext": "pnpm run publish:vsce && pnpm run publish:ovsx",
+    "publish:ovsx": "ovsx publish --no-dependencies",
+    "publish:vsce": "vsce publish --no-dependencies",
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
     "test": "node ./out/test/runTest.js",
     "vscode:prepublish": "pnpm run esbuild-base --minify",
@@ -61,6 +65,20 @@
           "type": "string",
           "default": "sops",
           "description": "%sopsfs.sopsCommand.description%"
+        },
+        "sopsfs.env": {
+          "type": "object",
+          "markdownDescription": "%sopsfs.env.mdDescription%",
+          "patternProperties": {
+            ".*": {
+              "type": "string"
+            }
+          },
+          "examples": [
+            {
+              "sssss": "ssss"
+            }
+          ]
         }
       }
     },
@@ -120,7 +138,8 @@
     "lru-cache": "^7.18.3",
     "object-path": "^0.11.8",
     "tempy": "^3.0.0",
-    "type-fest": "^3.6.1"
+    "type-fest": "^3.6.1",
+    "which": "^3.0.0"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
@@ -129,6 +148,7 @@
     "@types/node": "16.x",
     "@types/object-path": "^0.11.1",
     "@types/vscode": "^1.76.0",
+    "@types/which": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
     "@vscode/l10n-dev": "^0.0.23",
@@ -137,7 +157,9 @@
     "eslint": "^8.34.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
-    "typescript": "^5.0.0-beta"
+    "ovsx": "^0.8.0",
+    "typescript": "^5.0.0-beta",
+    "vsce": "^2.15.0"
   },
   "engines": {
     "vscode": "^1.76.0"

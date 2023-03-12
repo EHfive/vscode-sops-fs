@@ -2,6 +2,7 @@
   "Mounting failed, {0} might not be a valid SOPS file": "挂载失败, {0} 可能不是SOPS文件",
   "Already mounted SOPS file {0}": "已经挂载SOPS文件 {0}",
   "SOPS file {0} not mounted": "未挂载SOPS文件 {0}",
+  "Can't not found sops command(\"{0}\"), make sure it's installed.": "未找到sops命令(\"{0}\")，请安装",
   "Failed to decrypt SOPS file to JSON": "解密SOPS文件为JSON失败",
   "Set value on binary file is invalid": "在二进制文件设置值非法",
   "Failed to set {path} on SOPS file": "设置 {path} 失败",

@@ -3,5 +3,6 @@
   "sopsfs.unmountSopsFile.title": "Unmount SOPS virtual filesystem",
   "sopsfs.mountSopsEditor.title": "Mount the current file as SOPS virtual filesystem",
   "sopsfs.configuration.title": "SOPS Virtual Filesystem",
-  "sopsfs.sopsCommand.description": "Path to sops command"
+  "sopsfs.sopsCommand.description": "Path to sops command",
+  "sopsfs.env.mdDescription": "sops command environment variables, e.g.\n\n```json\n{ \"SOPS_AGE_KEY_FILE\": \"/path/to/age/key\" }\n```"
 }

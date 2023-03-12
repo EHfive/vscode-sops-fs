@@ -1,0 +1,6 @@
+{
+  "sopsfs.sopsCommand": "sops",
+  "sopsfs.env": {
+    "SOPS_AGE_KEY": "AGE-SECRET-KEY-1H7EAQVYYRC0EQ2S7V6XKEJ0TF5ZGGV0AVWHQ4424ZR8DMAU5LR0QL3ME6G"
+  }
+}

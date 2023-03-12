@@ -3,5 +3,6 @@
   "sopsfs.unmountSopsFile.title": "卸载 SOPS 虚拟文件系统",
   "sopsfs.mountSopsEditor.title": "挂载当前文件为 SOPS 虚拟文件系统",
   "sopsfs.configuration.title": "SOPS 虚拟文件系统",
-  "sopsfs.sopsCommand.description": "sops 命令路径"
+  "sopsfs.sopsCommand.description": "sops 命令路径",
+  "sopsfs.env.mdDescription": "sops 命令环境变量, 如：\n\n```json\n{ \"SOPS_AGE_KEY_FILE\": \"/path/to/age/key\" }\n```"
 }

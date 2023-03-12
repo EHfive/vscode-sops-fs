@@ -13,6 +13,9 @@
         "--extensionDevelopmentPath=${workspaceFolder}",
         "${workspaceFolder}/demo"
       ],
+      "env": {
+        "SOPS_AGE_KEY_FILE": "${workspaceFolder}/demo/keys.txt"
+      },
       "outFiles": ["${workspaceFolder}/out/**/*.js"],
       "preLaunchTask": "${defaultBuildTask}"
     },

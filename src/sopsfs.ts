@@ -7,7 +7,7 @@ import fs from "fs/promises";
 import objectPath from "object-path";
 import path from "path";
 import throttle from "lodash.throttle";
-import debounce from "lodash.debounce";
+import { throws } from "assert";
 
 const DELETED_MARKER =
   "vscode-sops-fs__deleted__ba2bfdb5-b5c2-460c-a1cd-4e257b05ebee";
@@ -23,6 +23,7 @@ enum SopsFormat {
 interface SopsFsOpenOptions {
   sopsUri: vscode.Uri;
   sopsCmd: string;
+  env: Record<string, string>;
 }
 
 function uriToObjPath(uri: vscode.Uri) {
@@ -115,6 +116,7 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
 
   private sopsCmd: string;
   private sopsUri: vscode.Uri;
+  private env: Record<string, string>;
   private sopsFormat: SopsFormat;
   private dataFilename: string;
 
@@ -129,11 +131,10 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
   constructor(opts: SopsFsOpenOptions) {
     this.sopsCmd = opts.sopsCmd;
     this.sopsUri = opts.sopsUri;
+    this.env = opts.env;
     this.sopsFormat = pathToFormat(this.sopsUri.path);
-    const basename = path
-      .basename(this.sopsUri.path)
-      .replace(/\.sops(\.[^\.]+)?$/, (_match, p1) => p1 || "");
-    this.dataFilename = "__sops__." + basename;
+    this.dataFilename =
+      "__sopsfs__" + path.extname(path.basename(this.sopsUri.path, ".sops"));
   }
 
   dispose() {
@@ -146,6 +147,31 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
     return (
       path.length === 1 && !!this.dataFilename && this.dataFilename === path[0]
     );
+  }
+
+  private async execSops(
+    args: readonly string[],
+    toString: true,
+    extraEnv?: Record<string, string>
+  ): Promise<string>;
+  private async execSops(
+    args: readonly string[],
+    toString: false,
+    extraEnv?: Record<string, string>
+  ): Promise<Buffer>;
+  private async execSops(
+    args: readonly string[],
+    toString: boolean,
+    extraEnv?: Record<string, string>
+  ): Promise<string | Buffer> {
+    const { stdout } = await execa(this.sopsCmd, args, {
+      env: {
+        ...this.env,
+        ...extraEnv,
+      },
+      encoding: toString ? undefined : null,
+    });
+    return stdout;
   }
 
   private async getTree(): Promise<
@@ -166,12 +192,10 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
         try {
           let jsonOut = null;
           if (this.sopsFormat !== SopsFormat.binary) {
-            const { stdout } = await execa(this.sopsCmd, [
-              "--output-type",
-              "json",
-              "--decrypt",
-              tempFile,
-            ]);
+            const stdout = await this.execSops(
+              ["--output-type", "json", "--decrypt", tempFile],
+              true
+            );
             jsonOut = JSON.parse(stdout) as JsonObject;
           }
           return [rawOut, jsonOut];
@@ -312,7 +336,7 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
     const setPath = pathToSopsSetPath(path, tree || {});
     const jsonValue = JSON.stringify(value);
     try {
-      await execa(this.sopsCmd, ["--set", `${setPath} ${jsonValue}`, sopsFile]);
+      await this.execSops(["--set", `${setPath} ${jsonValue}`, sopsFile], true);
     } catch (e) {
       vscode.window.showErrorMessage(
         l10n.t("Failed to set {path} on SOPS file", {
@@ -326,10 +350,7 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
 
   private async sopsCmdRead(sopsFile: string): Promise<Buffer> {
     try {
-      const { stdout } = await execa(this.sopsCmd, ["--decrypt", sopsFile], {
-        encoding: null,
-      });
-      return stdout;
+      return await this.execSops(["--decrypt", sopsFile], false);
     } catch (e) {
       vscode.window.showErrorMessage(l10n.t("Failed to decrypt SOPS file"));
       console.error(e);
@@ -348,10 +369,8 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
           ? `cmd.exe /c copy ${contentTemp}`
           : `cp ${contentTemp}`;
       try {
-        await execa(this.sopsCmd, [sopsFile], {
-          env: {
-            ["EDITOR"]: copyCmd,
-          },
+        await this.execSops([sopsFile], true, {
+          ["EDITOR"]: copyCmd,
         });
       } catch (err: any) {
         const e = err as ExecaError;

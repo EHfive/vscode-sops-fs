@@ -26,16 +26,21 @@ function parseUri(uri: vscode.Uri): {
   };
 }
 
+interface SopsFsProviderOpts {
+  sopsCmd: string;
+  env: Record<string, string>;
+}
+
 export class SopsFsProvider implements vscode.FileSystemProvider {
   private onDidChangeEmitter = new vscode.EventEmitter<
     vscode.FileChangeEvent[]
   >();
   onDidChangeFile = this.onDidChangeEmitter.event;
 
-  sopsCmd: string;
+  opts: SopsFsProviderOpts;
 
-  constructor(sopsCmd?: string) {
-    this.sopsCmd = sopsCmd || "sops";
+  constructor(opts?: Partial<SopsFsProviderOpts>) {
+    this.opts = { sopsCmd: "sops", ...opts, env: { ...opts?.env } };
   }
 
   private fsCache = new LRUCache<string, [SopsFs, Disposable]>({
@@ -51,7 +56,7 @@ export class SopsFsProvider implements vscode.FileSystemProvider {
     const uriKey = sopsFile.toString();
     let fs = this.fsCache.get(uriKey)?.[0];
     if (!fs) {
-      fs = new SopsFs({ sopsCmd: this.sopsCmd, sopsUri: sopsFile });
+      fs = new SopsFs({ ...this.opts, sopsUri: sopsFile });
       await fs.stat(vscode.Uri.from({ scheme: "sops", path: "/" }));
 
       const listener = fs.onDidChangeFile((events) => {
