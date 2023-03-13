@@ -17,14 +17,10 @@ async function mount(uri: vscode.Uri) {
     return;
   }
   if (vscode.workspace.getWorkspaceFolder(sopsUri) === undefined) {
-    vscode.workspace.updateWorkspaceFolders(
-      vscode.workspace.workspaceFolders!.length,
-      0,
-      {
-        name: "sops:" + basename,
-        uri: sopsUri,
-      }
-    );
+    vscode.workspace.updateWorkspaceFolders(0, 0, {
+      name: "sops:" + basename,
+      uri: sopsUri,
+    });
   } else {
     vscode.window.showWarningMessage(
       l10n.t("Already mounted SOPS file {0}", basename)
