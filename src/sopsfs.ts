@@ -300,12 +300,14 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
 
     if (!this.watcher) {
       const watcher = vscode.workspace.createFileSystemWatcher(
-        this.sopsUri.fsPath,
-        true,
-        false,
-        false
+        this.sopsUri.fsPath
       );
       this.watcher = watcher;
+      this.subscriptions.push(
+        watcher.onDidCreate(() => {
+          this.invalidateTreeCache();
+        })
+      );
       this.subscriptions.push(
         watcher.onDidChange(() => {
           this.invalidateTreeCache();
