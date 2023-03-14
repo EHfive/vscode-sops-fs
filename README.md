@@ -2,6 +2,13 @@
 
 VS Code [SOPS](https://github.com/mozilla/sops) virtual filesystem extension.
 
+<details>
+  <summary>Demo</summary>
+ 
+https://user-images.githubusercontent.com/24871166/224997543-886de0d0-f8ff-4d36-a71c-df399d447094.mp4
+</details>
+
+
 ## Usage
 
 Insert `.sops` to SOPS filename so the extension can recognize the file as SOPS, e.g.
