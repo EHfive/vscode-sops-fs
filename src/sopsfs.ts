@@ -165,6 +165,7 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
     extraEnv?: Record<string, string>
   ): Promise<string | Buffer> {
     const { stdout } = await execa(this.sopsCmd, args, {
+      stripFinalNewline: false,
       env: {
         ...this.env,
         ...extraEnv,
