@@ -128,7 +128,7 @@
     "onFileSystem:sops"
   ],
   "dependencies": {
-    "execa": "^7.0.0",
+    "execa": "^7.1.1",
     "lodash.throttle": "^4.1.1",
     "lru-cache": "^7.18.3",
     "object-path": "^0.11.8",
@@ -140,22 +140,21 @@
     "@types/glob": "^8.1.0",
     "@types/lodash.throttle": "^4.1.7",
     "@types/mocha": "^10.0.1",
-    "@types/node": "16.x",
+    "@types/node": "~16.18.16",
     "@types/object-path": "^0.11.1",
     "@types/vscode": "^1.76.0",
     "@types/which": "^2.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.53.0",
-    "@typescript-eslint/parser": "^5.53.0",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
     "@vscode/l10n-dev": "^0.0.23",
-    "@vscode/test-electron": "^2.2.3",
+    "@vscode/test-electron": "^2.3.0",
     "@vscode/vsce": "^2.18.0",
-    "esbuild": "^0.17.11",
-    "eslint": "^8.34.0",
+    "esbuild": "^0.17.12",
+    "eslint": "^8.36.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
     "ovsx": "^0.8.0",
-    "tsx": "^3.12.4",
-    "typescript": "^5.0.0-beta"
+    "typescript": "^5.0.2"
   },
   "engines": {
     "vscode": "^1.76.0"

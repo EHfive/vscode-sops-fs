@@ -1,13 +1,30 @@
-# vscode-sops-fs
+# SOPS Virtual Filesystem
 
 VS Code [SOPS](https://github.com/mozilla/sops) virtual filesystem extension.
 
 <details>
-  <summary>Demo</summary>
- 
+  <summary>Show Demo Video</summary>
+
 https://user-images.githubusercontent.com/24871166/224997543-886de0d0-f8ff-4d36-a71c-df399d447094.mp4
+
 </details>
 
+### Features
+- Transparent decryption and re-encryption of SOPS file.
+- Mapping SOPS entries to individual virtual files.
+- Allows non-trivial text format for each entry in SOPS file so you can enjoy syntax highlighting & formatting powered by VS Code ecosystem.
+
+## Install
+
+| Marketplace               | Extension                                                               |
+| ------------------------- | ----------------------------------------------------------------------- |
+| Visual Studio Marketplace | [eh5.vscode-sops-fs](https://open-vsx.org/extension/eh5/vscode-sops-fs) |
+| Open VSX Registry         | [eh5.vscode-sops-fs](https://open-vsx.org/extension/eh5/vscode-sops-fs) |
+
+### Requirements
+
+- `sops` in `PATH`
+- Recent VS Code that supports [l10n](https://code.visualstudio.com/api/references/vscode-api#l10n) API
 
 ## Usage
 
@@ -18,6 +35,7 @@ Insert `.sops` to SOPS filename so the extension can recognize the file as SOPS,
 - `binary` => `binary.sops`
 
 Alternatively tweak `files.associations` in your settings to associate arbitrary filenames to language ID `sops`.
+
 ```json
 {
   "files.associations": {
@@ -49,6 +67,7 @@ Configure `sopsfs.env` in settings to pass SOPS environment variables for keys. 
   }
 }
 ```
+
 See also demo [settings](demo/.vscode/settings.json).
 
 ## Development
@@ -64,14 +83,14 @@ See also demo [settings](demo/.vscode/settings.json).
 
 [base64url](https://nodejs.org/api/buffer.html#buffers-and-character-encodings) encoded URI of SOPS file, which is going to be accessed.
 
-As we use [vscode.workspace.fs](https://code.visualstudio.com/api/references/vscode-api#FileSystem) API instead of native `fs` module to access files, the URI can be any type of schemas registered.
-
 For example, given a URI `file:///home/alice/project/secrets.yaml` it has `<base64url encoded SOPS URI>` of `ZmlsZTovLy9ob21lL2FsaWNlL3Byb2plY3Qvc2VjcmV0cy55YW1s`.
 
 ```javascript
 > Buffer.from("file:///home/alice/project/secrets.yaml").toString("base64url")
 'ZmlsZTovLy9ob21lL2FsaWNlL3Byb2plY3Qvc2VjcmV0cy55YW1s'
 ```
+
+As we use [vscode.workspace.fs](https://code.visualstudio.com/api/references/vscode-api#FileSystem) API instead of native `fs` module to access files, the URI can be any type of schemas registered.
 
 - `<path>`
 

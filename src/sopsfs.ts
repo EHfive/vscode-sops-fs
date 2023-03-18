@@ -7,7 +7,6 @@ import fs from "fs/promises";
 import objectPath from "object-path";
 import path from "path";
 import throttle from "lodash.throttle";
-import { throws } from "assert";
 
 const DELETED_MARKER =
   "vscode-sops-fs__deleted__ba2bfdb5-b5c2-460c-a1cd-4e257b05ebee";
