@@ -368,8 +368,8 @@ export class SopsFs implements vscode.FileSystemProvider, vscode.Disposable {
       await fs.writeFile(contentTemp, content);
       const copyCmd =
         process.platform === "win32"
-          ? `cmd.exe /c copy ${contentTemp}`
-          : `cp ${contentTemp}`;
+          ? `cmd.exe /c copy '${contentTemp}'`
+          : `cp '${contentTemp}'`;
       try {
         await this.execSops([sopsFile], true, {
           ["EDITOR"]: copyCmd,
