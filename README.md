@@ -10,16 +10,17 @@ https://user-images.githubusercontent.com/24871166/224997543-886de0d0-f8ff-4d36-
 </details>
 
 ### Features
+
 - Transparent decryption and re-encryption of SOPS file.
 - Mapping SOPS entries to individual virtual files.
 - Allows non-trivial text format for each entry in SOPS file so you can enjoy syntax highlighting & formatting powered by VS Code ecosystem.
 
 ## Install
 
-| Marketplace               | Extension                                                               |
-| ------------------------- | ----------------------------------------------------------------------- |
-| Visual Studio Marketplace | [eh5.vscode-sops-fs](https://open-vsx.org/extension/eh5/vscode-sops-fs) |
-| Open VSX Registry         | [eh5.vscode-sops-fs](https://open-vsx.org/extension/eh5/vscode-sops-fs) |
+| Marketplace               | Extension                                                                                    |
+| ------------------------- | -------------------------------------------------------------------------------------------- |
+| Visual Studio Marketplace | [eh5.vscode-sops-fs](https://marketplace.visualstudio.com/items?itemName=eh5.vscode-sops-fs) |
+| Open VSX Registry         | [eh5.vscode-sops-fs](https://open-vsx.org/extension/eh5/vscode-sops-fs)                      |
 
 ### Requirements
 
