@@ -1,7 +1,7 @@
 {
   "name": "vscode-sops-fs",
   "displayName": "SOPS Virtual Filesystem",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "private": "true",
   "description": "VS Code SOPS virtual filesystem extension",
   "categories": [
