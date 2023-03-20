@@ -25,11 +25,11 @@ https://user-images.githubusercontent.com/24871166/224997543-886de0d0-f8ff-4d36-
 ### Requirements
 
 - `sops` in `PATH`
-- Recent VS Code that supports [l10n](https://code.visualstudio.com/api/references/vscode-api#l10n) API
+- Recent version of VS Code that supports [l10n](https://code.visualstudio.com/api/references/vscode-api#l10n) API
 
 ## Usage
 
-Insert `.sops` to SOPS filename so the extension can recognize the file as SOPS, e.g.
+Insert `.sops` into SOPS filename so the extension can recognize the file as SOPS, e.g.
 
 - `foo.json` => `foo.sops.json`
 - `bar.yaml` => `bar.sops.yaml`
